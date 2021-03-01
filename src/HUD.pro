@@ -13,11 +13,13 @@ INCLUDEPATH +=  \
 
 
 HEADERS +=  \
-    appwnd.h
+    appwnd.h \
+    hud.h
 
 
 SOURCES +=  \
     appwnd.cpp \
+    hud.cpp \
     main.cpp
 
 
