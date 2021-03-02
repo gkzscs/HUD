@@ -2,6 +2,7 @@
 #define APPWND_H
 
 #include "csutils_stable.h"
+#include "scalablewgt.h"
 
 
 class AppWnd : public cs::CSWidget
@@ -18,6 +19,11 @@ protected:
     void initSignalSlot();
 
 protected:
+    void btnMinimizeClickSlot();
+    void btnMaximizeClickSlot();
+
+protected:
+    ScalableWgt *_wgtScalable;
 
 };
 

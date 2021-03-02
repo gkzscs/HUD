@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="close">res/icon/close_24x24.png</file>
+        <file alias="maximize">res/icon/maximize_24x24.png</file>
+        <file alias="minimize">res/icon/minimize_24x24.png</file>
+    </qresource>
+</RCC>

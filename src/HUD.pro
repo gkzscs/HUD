@@ -14,12 +14,17 @@ INCLUDEPATH +=  \
 
 HEADERS +=  \
     appwnd.h \
-    hud.h
+    hud.h \
+    scalablewgt.h
 
 
 SOURCES +=  \
     appwnd.cpp \
     hud.cpp \
-    main.cpp
+    main.cpp \
+    scalablewgt.cpp
+
+RESOURCES += \
+    res.qrc
 
 
