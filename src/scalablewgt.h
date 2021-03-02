@@ -47,6 +47,8 @@ protected:
     void autoResize(const QPoint &pos);
     bool isInside(const QPoint &pos);
 
+    void showMenuBarForAMoment();
+
 protected:
     QToolButton *createToolButton(const QString &iconName);
 
@@ -71,6 +73,7 @@ protected:
     Direction _direction;
     QPoint _offset;
 
+    QTimer *_timer;
 };
 
 

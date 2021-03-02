@@ -38,6 +38,8 @@ void ScalableWgt::initMember()
     _isMaximized = false;
     _direction = Unknown;
 
+    _timer = new QTimer(this);
+
     // Set object name
     _btnMinimize->setObjectName("btn_minimize");
     _btnMaximize->setObjectName("btn_maximize");
@@ -51,6 +53,9 @@ void ScalableWgt::initUI()
     setWindowFlag(Qt::FramelessWindowHint);
     setMouseTracking(true);
 
+    _timer->setSingleShot(true);
+    _timer->setInterval(1000);
+
     // Set style sheet
     setStyleSheet("background-color: green;");
 }
@@ -60,14 +65,21 @@ void ScalableWgt::initSignalSlot()
     connect(_btnMinimize, &QToolButton::clicked, this, &ScalableWgt::btnMinimizeClickSlot);
     connect(_btnMaximize, &QToolButton::clicked, this, &ScalableWgt::btnMaximizeClickSlot);
 //    connect(_btnClose, &QToolButton::clicked, this, &ScalableWgt::btnCloseClickSlot);
+
+    connect(_timer, &QTimer::timeout, [&]() {
+        _menuBar->hide();
+        _timer->stop();
+    });
 }
 
 void ScalableWgt::resizeEvent(QResizeEvent *event)
 {
     cs::CSWidget::resizeEvent(event);
 
+    const int barH = 40;
     const int space = 10;
 
+    _menuBar->setGeometry(0, 0, width(), barH);
 //    _btnClose->move(width()-space-_btnClose->width(), space);
     _btnMaximize->move(width()-space-space-_btnMaximize->width(), space);
     _btnMinimize->move(_btnMaximize->x()-space-_btnMinimize->width(), space);
@@ -85,11 +97,14 @@ void ScalableWgt::mousePressEvent(QMouseEvent *e)
 
 void ScalableWgt::mouseMoveEvent(QMouseEvent *e)
 {
+    showMenuBarForAMoment();
+
     // Check the independent attribute
     if (!_independent) return;
 
     const auto pos = e->pos();
 
+    // Reset the mouse cursor shape
     if (!_pressed)
     {
         autoReshapeMouse(pos);
@@ -234,9 +249,17 @@ bool ScalableWgt::isInside(const QPoint &pos)
     return this->rect().contains(pos);
 }
 
+void ScalableWgt::showMenuBarForAMoment()
+{
+    _menuBar->show();
+
+    _timer->stop();
+    _timer->start();
+}
+
 QToolButton *ScalableWgt::createToolButton(const QString &iconName)
 {
-    auto btn = new QToolButton(this);
+    auto btn = new QToolButton(_menuBar);
     btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     btn->resize(24, 24);
     btn->setIconSize(btn->size());
