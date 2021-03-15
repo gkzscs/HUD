@@ -26,8 +26,23 @@ bool ScalableWgt::independent() const
     return _independent;
 }
 
+void ScalableWgt::showHud(bool flag)
+{
+    _hud->setVisible(flag);
+}
+
+void ScalableWgt::addAdaptiveWgt(QWidget *wgt)
+{
+    if (!wgt) return;
+
+    _listAdaptiveWgt.append(wgt);
+    resizeEvent(nullptr);
+}
+
 void ScalableWgt::initMember()
 {
+    _hud = new Hud(this);
+
     _menuBar = new QWidget(this);
     _independent = (parent() == nullptr ? true : false);
     _btnMinimize = createToolButton("minimize");
@@ -83,6 +98,13 @@ void ScalableWgt::resizeEvent(QResizeEvent *event)
 //    _btnClose->move(width()-space-_btnClose->width(), space);
     _btnMaximize->move(width()-space-space-_btnMaximize->width(), space);
     _btnMinimize->move(_btnMaximize->x()-space-_btnMinimize->width(), space);
+
+    _hud->setGeometry(rect());
+
+    for (auto wgt : _listAdaptiveWgt)
+    {
+        wgt->setGeometry(rect());
+    }
 }
 
 void ScalableWgt::mousePressEvent(QMouseEvent *e)
@@ -130,6 +152,8 @@ void ScalableWgt::mouseReleaseEvent(QMouseEvent *e)
 
     _pressed = false;
     _direction = Unknown;
+
+    showHud(!_hud->isVisible());
 }
 
 void ScalableWgt::mouseDoubleClickEvent(QMouseEvent *e)

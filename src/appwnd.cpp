@@ -17,6 +17,7 @@ AppWnd::~AppWnd()
 void AppWnd::initMember()
 {
     _wgtScalable = new ScalableWgt(this);
+    _hud = new Hud(this);
 }
 
 void AppWnd::initUI()
@@ -26,7 +27,9 @@ void AppWnd::initUI()
     setMouseTracking(true);
 
     _wgtScalable->setIndependent(true);
-    _wgtScalable->show();
+//    _wgtScalable->show();
+
+    _hud->show();
 }
 
 void AppWnd::initSignalSlot()
@@ -51,4 +54,12 @@ void AppWnd::btnMaximizeClickSlot()
 
     _wgtScalable->setIndependent(true);
     _wgtScalable->show();
+}
+
+void AppWnd::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+
+    if (_wgtScalable->parent() == this) _wgtScalable->setGeometry(rect());
+    _hud->setGeometry(rect());
 }

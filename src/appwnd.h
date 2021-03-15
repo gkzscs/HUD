@@ -3,6 +3,7 @@
 
 #include "csutils_stable.h"
 #include "scalablewgt.h"
+#include "hud.h"
 
 
 class AppWnd : public cs::CSWidget
@@ -23,7 +24,11 @@ protected:
     void btnMaximizeClickSlot();
 
 protected:
+    virtual void resizeEvent(QResizeEvent *event) override;
+
+protected:
     ScalableWgt *_wgtScalable;
+    Hud *_hud;
 
 };
 

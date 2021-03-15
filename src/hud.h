@@ -21,6 +21,7 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
 
 protected:
+    void drawBackground();
     void drawHeading(QPainter &p);
     void drawRollAngle(QPainter &p);
     void drawPitchAngle(QPainter &p);
@@ -32,12 +33,16 @@ protected:
     void drawLabels(QPainter &p);
 
 protected:
+    double _targetHeading;
     double _heading;
+    double _targetRoll;
     double _roll;
     double _pitch;
+    double _targetAirSpeed;
     double _airSpeed;
     double _groundSpeed;
     double _roc;
+    double _targetHeight;
     double _height;
 
     double _eas;

@@ -2,6 +2,7 @@
 #define SCALABLEWGT_H
 
 #include "csutils_stable.h"
+#include "hud.h"
 
 
 class ScalableWgt : public cs::CSWidget
@@ -28,6 +29,9 @@ public:
 
     void setIndependent(bool flag);
     bool independent() const;
+
+    void showHud(bool flag);
+    void addAdaptiveWgt(QWidget *wgt);
 
 protected:
     void initMember();
@@ -65,6 +69,8 @@ protected:
     QWidget *_menuBar;
     QToolButton *_btnMinimize;
     QToolButton *_btnMaximize;
+
+    Hud *_hud;
 //    QToolButton *_btnClose;
 
     bool _independent;
@@ -74,6 +80,9 @@ protected:
     QPoint _offset;
 
     QTimer *_timer;
+
+    QList<QWidget *> _listAdaptiveWgt;
+
 };
 
 
